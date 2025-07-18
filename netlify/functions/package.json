@@ -1,0 +1,7 @@
+{
+  "name": "strength-capacity-api",
+  "version": "1.0.0",
+  "description": "API for strength capacity exercise database",
+  "main": "exercise-coefficient.js",
+  "type": "commonjs"
+} 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        input, button { padding: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Exercise Database API Test</h1>
+    
+    <div>
+        <h3>Get All Exercises</h3>
+        <button onclick="getAllExercises()">Get All Exercises</button>
+        <div id="allExercises" class="result"></div>
+    </div>
+    
+    <div>
+        <h3>Get Specific Exercise</h3>
+        <input type="text" id="exerciseName" placeholder="Enter exercise name" value="squat">
+        <button onclick="getExercise()">Get Exercise</button>
+        <div id="exerciseResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = '/.netlify/functions/exercise-coefficient';
+        
+        async function getAllExercises() {
+            try {
+                const response = await fetch(API_BASE);
+                const data = await response.json();
+                document.getElementById('allExercises').innerHTML = 
+                    `<strong>Total Exercises:</strong> ${data.total}<br>
+                     <strong>First 10 exercises:</strong> ${data.exercises.slice(0, 10).join(', ')}`;
+            } catch (error) {
+                document.getElementById('allExercises').innerHTML = `Error: ${error.message}`;
+            }
+        }
+        
+        async function getExercise() {
+            const exerciseName = document.getElementById('exerciseName').value;
+            try {
+                const response = await fetch(`${API_BASE}?exercise=${encodeURIComponent(exerciseName)}`);
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById('exerciseResult').innerHTML = `Error: ${data.error}`;
+                } else {
+                    document.getElementById('exerciseResult').innerHTML = 
+                        `<strong>Exercise:</strong> ${data.exercise}<br>
+                         <strong>Coefficient:</strong> ${data.coefficient}`;
+                }
+            } catch (error) {
+                document.getElementById('exerciseResult').innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html> 

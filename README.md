@@ -1,31 +1,36 @@
 # Strength Capacity Calculator
 
-A web-based strength training calculator that helps track and calculate AKPSC (Athletic Kinetic Performance Strength Capacity) scores.
+A comprehensive strength training calculator and tracking application that helps athletes and fitness enthusiasts calculate their strength capacity scores and track their progress over time.
 
 ## Features
 
-- Exercise database with over 400+ exercises
-- Real-time AKPSC score calculation
-- Height-based calculations
-- Set, rep, and tempo adjustments
-- Training history tracking
-- Modern, responsive design
+- **ASC (Athletic Strength Capacity) Calculator**: Calculate strength capacity scores based on exercise type, weight, reps, sets, and tempo
+- **Profile Management**: Store and track personal information including name, sport, and height
+- **Body Weight Tracking**: Monitor body weight changes over time
+- **Lifting Progress**: Track AKPSC (Athletic Kinetic Power Strength Capacity) scores
+- **Conditioning Data**: Record various conditioning metrics like 40-yard dash, max wattage, sprint speed, etc.
+- **Historical Data**: View and manage historical data with calendar interface
+- **Responsive Design**: Works on desktop and mobile devices
 
 ## Usage
 
-1. Enter your height (feet and inches)
-2. Select exercises from the searchable database
-3. Input weight, reps, and tempo for each set
-4. View real-time AKPSC score updates
-5. Save your workout data
+1. Enter your profile information (name, sport, height)
+2. Add exercises with sets, reps, weight, and tempo
+3. Calculate your ASC score
+4. Track your body weight, lifting progress, and conditioning data
+5. View historical data and trends
 
-## Live Demo
+## Deployment
 
-Visit the live application at: [Your GitHub Pages URL will be here]
+This application is designed to be deployed on Netlify for easy sharing and access.
 
-## Technologies
+## Technologies Used
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla)
-- Local Storage for data persistence 
+- JavaScript (ES6+)
+- Local Storage for data persistence
+
+## License
+
+This project is open source and available under the MIT License. 

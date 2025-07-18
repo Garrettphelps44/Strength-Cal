@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .icon-preview { 
+            width: 180px; 
+            height: 180px; 
+            background: linear-gradient(45deg, #000000, #13be72);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .instructions { background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        button { padding: 10px 20px; background: #13be72; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <h1>Strength Capacity App Icon Generator</h1>
+    
+    <div class="instructions">
+        <h3>How to create your icon:</h3>
+        <ol>
+            <li>Right-click on the icon preview below</li>
+            <li>Select "Save image as..."</li>
+            <li>Save it as "apple-touch-icon-180x180.png" in your project folder</li>
+            <li>Use an online tool to resize it to the other sizes needed</li>
+        </ol>
+    </div>
+    
+    <div class="icon-preview" id="iconPreview">SC</div>
+    
+    <button onclick="downloadIcon()">Download Icon</button>
+    
+    <div class="instructions">
+        <h3>Required icon sizes:</h3>
+        <ul>
+            <li><strong>apple-touch-icon-180x180.png</strong> (main icon)</li>
+            <li><strong>apple-touch-icon-152x152.png</strong> (iPad)</li>
+            <li><strong>apple-touch-icon-120x120.png</strong> (iPhone)</li>
+            <li><strong>apple-touch-icon-167x167.png</strong> (iPad Pro)</li>
+            <li><strong>favicon-32x32.png</strong> (browser tab)</li>
+            <li><strong>favicon-16x16.png</strong> (browser tab small)</li>
+        </ul>
+    </div>
+    
+    <script>
+        function downloadIcon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 180;
+            canvas.height = 180;
+            const ctx = canvas.getContext('2d');
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 180, 180);
+            gradient.addColorStop(0, '#000000');
+            gradient.addColorStop(1, '#13be72');
+            
+            // Draw background
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 180, 180);
+            
+            // Add rounded corners
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 180, 180, 20);
+            ctx.fill();
+            
+            // Reset composite operation
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // Add text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('SC', 90, 90);
+            
+            // Download
+            const link = document.createElement('a');
+            link.download = 'apple-touch-icon-180x180.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Add roundRect polyfill for older browsers
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+    </script>
+</body>
+</html> 

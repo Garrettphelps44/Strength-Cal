@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Previous head content remains the same -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Strength Capacity</title>
+        <style>
+            /* Previous styles remain exactly the same */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #000000;
+                color: #13be72;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .header {
+                text-align: center;
+                padding: 20px 0;
+                background-color: #000000;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+            h1 {
+                font-size: 4em;
+                margin: 0;
+            }
+            .container {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2px;
+            }
+            .top-row {
+                display: flex;
+                justify-content: center;
+                width: 90%;
+                max-width: 415px;
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+            .score-group {
+                display: flex;
+                gap: 5px;
+                width: 90%;
+            }
+            .input-box {
+                background-color: #000000;
+                border: 2px solid #13be72;
+                padding: 3px;
+                font-size: 1em;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 10px;
+                flex: 1;
+            }
+
+            .input-label {
+                font-size: 0.8em;
+                margin-bottom: 5px;
+                text-align: center;
+                width: 90%;
+            }
+            .input-box input {
+                width: 50px;
+                text-align: center;
+                background-color: #000000;
+                color: #13be72;
+                border: 1px solid #13be72;
+                font-size: 1em;
+                padding: 2px;
+                border-radius: 10px;
+            }
+            .input[type="date"] {
+                color: #ffffff;
+                background-color: #000000;
+                border: 1px solid #13be72;
+            }
+            #totalScore {
+                font-size: 1em;
+                text-align: center;
+            }
+            .content {
+                background-color: #000000;
+                padding: 5px;
+                border-radius: 20px;
+                width: 100%;
+                max-width: 415px;
+                margin-bottom: 1px;
+                border: 2px solid #13be72;
+            }
+            .calc-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+                gap: 10px;
+            }
+            .calc-box {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .calc-box label {
+                display: block;
+                margin-bottom: px;
+                font-size: 0.9em;
+                text-align: center;
+            }
+            .calc-box select, .calc-box input {
+                width: 100%;
+                padding: 2px;
+                background-color: #3a3a3a;
+                color: #ffffff;
+                border: 1px solid #000000;
+                font-size: 18px;
+                text-align: center;
+                border-radius: 20px;
+            }
+            .button-row {
+                display: flex;
+                justify-content: center;
+                margin-top: 5px;
+            }
+            button {
+                width: 100px;
+                padding: 5px 5px;
+                background-color: #13be72;
+                color: #000000;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                font-size: px;
+                border-radius: 5px;
+            }
+            button:hover {
+                background-color: #13be72;
+            }
+            .results {
+                margin-top: 2px;
+                font-size: 1.2em;
+                text-align: center;
+            }
+            .red-text {
+                color: #ff0000;
+            }
+            #doneButton, #cancelButton {
+                margin-top: 5px;
+                font-size: 1.2em;
+                padding: 1px 5px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            #cancelButton {
+                margin-left: 10px;
+                background-color: #ff4444;
+            }
+            .set-input {
+                width: 55px;
+                padding: 2px;
+                background-color: #2e2e2e;
+                color: #ffffff;
+                border: 2px solid #13be72;
+                font-size: 12px;
+                text-align: center;
+                border-radius: 20px
+            }
+            .set-value {
+                width: 60px;
+                background-color: #000000;
+            }
+            .set-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1px;
+                gap: 5px;
+            }
+
+            .exercise-select-container {
+                position: relative;
+                width: 90%;
+            }
+
+            .exercise-search {
+                width: 90%;
+                padding: 1%;
+                border: 1px solid #000000;
+                border-radius: 1px;
+            }
+
+            .exercise-options {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                max-height: 200px;
+                overflow-y: auto;
+                background: rgb(0, 0, 0);
+                border: 1px solid #000000;
+                border-top: none;
+                border-radius: 0 0 4px 3px;
+                z-index: 1000;
+            }
+
+            .exercise-option {
+                padding: 8px;
+                cursor: pointer;
+            }
+
+            .exercise-option:hover {
+                background-color:black;
+            }
+
+            .exercise-option.selected {
+                background-color: #000000;
+            }
+
+            /* New styles for profile, weight, lifting, and conditioning container */
+            .info-container {
+                display: flex;
+                justify-content: space-between;
+                width: 80%;
+                max-width: 415px;
+                margin-bottom: 5px;
+                gap: 5px;
+            }
+
+            .info-section {
+                flex: 1;
+                background-color: #000000;
+                border: 2px solid #13be72;
+                padding: 5px;
+                border-radius: 20px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .info-section:hover {
+                background-color: rgba(19, 190, 114, 0.1);
+            }
+
+            .info-section h3 {
+                margin: 0;
+                font-size: 15px;
+                color: #13be72;
+            }
+
+            .info-section .current-value {
+                font-size: 0.8em;
+                color: #13be72;
+                margin-top: 5px;
+                opacity: 0.8;
+            }
+
+            /* Modal styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 2000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(5px);
+            }
+
+            .modal-content {
+                background-color: #000000;
+                margin: 2% auto;
+                padding: 10px;
+                border: 2px solid #13be72;
+                border-radius: 15px;
+                width: 90%;
+                max-width: 400px;
+                max-height: 95vh;
+                min-height: 285px;
+                overflow-y: auto;
+                position: relative;
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #13be72;
+                padding-bottom: 5px;
+            }
+
+            .modal-title {
+                color: #13be72;
+                font-size: 1.5em;
+                margin: 0;
+            }
+
+            .close-modal {
+                color: #13be72;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 0;
+                width: auto;
+            }
+
+            .close-modal:hover {
+                color: #ffffff;
+            }
+
+            .modal-body {
+                color: #13be72;
+                min-height: 200px;
+            }
+
+            .modal-body input,
+            .modal-body select {
+                width: 100%;
+                background-color: #000000;
+                color: #13be72;
+                border: 1px solid #13be72;
+                font-size: 0.9em;
+                padding: 8px;
+                text-align: center;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .modal-body .date-input-container {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                position: relative;
+                margin-bottom: 10px;
+            }
+
+            .modal-body .calendar-button {
+                background: none;
+                border: 1px solid #13be72;
+                color: #13be72;
+                padding: 8px 12px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 0.8em;
+                width: auto;
+            }
+
+            .modal-body .calendar-popup {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: black;
+                border: 2px solid #13be72;
+                border-radius: 5px;
+                padding: 10px;
+                z-index: 1001;
+                width: 280px;
+                max-height: 300px;
+                overflow-y: auto;
+            }
+
+            .modal-body .warning-message {
+                color: #ff4444;
+                font-size: 0.8em;
+                margin: 5px 0;
+                display: none;
+            }
+
+            .modal-body .button-group {
+                display: flex;
+                gap: 10px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+
+            .modal-body button {
+                flex: 1;
+                background-color: #13be72;
+                color: black;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.9em;
+                min-width: 80px;
+            }
+
+            .modal-body button:hover {
+                opacity: 0.8;
+            }
+
+            .modal-body button.cancel-button {
+                background-color: #ff4444;
+            }
+
+            .modal-body .history-view {
+                display: none;
+                margin-top: 15px;
+                max-height: 150px;
+                overflow-y: auto;
+                border: 1px solid #13be72;
+                border-radius: 5px;
+                padding: 10px;
+            }
+
+            .modal-body .history-item {
+                border: 1px solid #13be72;
+                padding: 8px;
+                margin: 5px 0;
+                border-radius: 3px;
+                cursor: pointer;
+                font-size: 0.8em;
+            }
+
+            .modal-body .history-item:hover {
+                background-color: rgba(19, 190, 114, 0.1);
+            }
+
+            /* Calendar styles for modal */
+            .modal-body .calendar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .modal-body .calendar-header button {
+                background: none;
+                border: 1px solid #13be72;
+                color: #13be72;
+                padding: 2px 8px;
+                cursor: pointer;
+                border-radius: 3px;
+                font-size: 0.8em;
+                width: auto;
+            }
+
+            .modal-body .calendar-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+
+            .modal-body .calendar-day {
+                text-align: center;
+                padding: 5px;
+                cursor: pointer;
+                border-radius: 50%;
+                position: relative;
+                font-size: 0.8em;
+            }
+
+            .modal-body .calendar-day:hover {
+                background-color: rgba(19, 190, 114, 0.2);
+            }
+
+            .modal-body .calendar-day.has-data::after {
+                content: '';
+                position: absolute;
+                bottom: 2px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 4px;
+                height: 4px;
+                background-color: #13be72;
+                border-radius: 50%;
+            }
+
+            .modal-body .calendar-day.multiple-entries::before {
+                content: attr(data-entries);
+                position: absolute;
+                top: -2px;
+                right: -2px;
+                background-color: #ff4444;
+                color: white;
+                font-size: 0.6em;
+                padding: 1px 3px;
+                border-radius: 50%;
+                min-width: 12px;
+                text-align: center;
+            }
+
+            .modal-body .calendar-day.selected {
+                background-color: #13be72;
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Previous body structure remains the same until script -->
+        <div class="container">
+            <!-- Hidden date input for background functionality -->
+            <input type="date" id="workoutDate" style="display: none;">
+            <!-- Hidden height inputs for functionality -->
+            <input type="number" id="feet" min="0" max="9" style="display: none;">
+            <input type="number" id="inches" min="0" max="11" style="display: none;">
+            <div class="info-container">
+                <div class="info-section" onclick="openModal('profile')">
+                    <h3>Profile</h3>
+                    <div class="current-value" id="profileCurrentValue">Click to edit</div>
+                </div>
+                <div class="info-section" onclick="openModal('weight')">
+                    <h3>Body Weight</h3>
+                    <div class="current-value" id="weightCurrentValue">Click to edit</div>
+                </div>
+                <div class="info-section" onclick="openModal('lifting')">
+                    <h3>Lifting</h3>
+                    <div class="current-value" id="liftingCurrentValue">Click to edit</div>
+                </div>
+                <div class="info-section" onclick="openModal('conditioning')">
+                    <h3>Other Data</h3>
+                    <div class="current-value" id="conditioningCurrentValue">Click to edit</div>
+                </div>
+            </div>
+
+            <!-- Profile Modal -->
+            <div id="profileModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Profile</h2>
+                        <button class="close-modal" onclick="closeModal('profile')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="date-input-container">
+                            <input type="date" id="profileDate">
+                            <button class="calendar-button" onclick="toggleCalendar('profile', event)">📅</button>
+                            <div id="profileCalendar" class="calendar-popup">
+                                <div class="calendar-header">
+                                    <button onclick="changeMonth('profile', -1)">←</button>
+                                    <span id="profileCalendarMonth"></span>
+                                    <button onclick="changeMonth('profile', 1)">→</button>
+                                </div>
+                                <div class="calendar-grid" id="profileCalendarGrid"></div>
+                            </div>
+                        </div>
+                        <input type="text" id="profileName" placeholder="Name">
+                        <select id="profileSport">
+                            <option value="">Select Sport</option>
+                            <option value="Football">Football</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Baseball">Baseball</option>
+                            <option value="Soccer">Soccer</option>
+                            <option value="Hockey">Hockey</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="Golf">Golf</option>
+                            <option value="Volleyball">Volleyball</option>
+                            <option value="Track & Field">Track & Field</option>
+                            <option value="Cross Country">Cross Country</option>
+                            <option value="Swimming">Swimming</option>
+                            <option value="Wrestling">Wrestling</option>
+                            <option value="Boxing">Boxing</option>
+                            <option value="MMA">MMA</option>
+                            <option value="Rugby">Rugby</option>
+                            <option value="Lacrosse">Lacrosse</option>
+                            <option value="Cricket">Cricket</option>
+                            <option value="Badminton">Badminton</option>
+                            <option value="Table Tennis">Table Tennis</option>
+                            <option value="Rowing">Rowing</option>
+                            <option value="Cycling">Cycling</option>
+                            <option value="Triathlon">Triathlon</option>
+                            <option value="Marathon">Marathon</option>
+                            <option value="Weightlifting">Weightlifting</option>
+                            <option value="Powerlifting">Powerlifting</option>
+                            <option value="Bodybuilding">Bodybuilding</option>
+                            <option value="CrossFit">CrossFit</option>
+                            <option value="Gymnastics">Gymnastics</option>
+                            <option value="Diving">Diving</option>
+                            <option value="Skiing">Skiing</option>
+                            <option value="Snowboarding">Snowboarding</option>
+                            <option value="Surfing">Surfing</option>
+                            <option value="Skateboarding">Skateboarding</option>
+                            <option value="Rock Climbing">Rock Climbing</option>
+                            <option value="Martial Arts">Martial Arts</option>
+                            <option value="Fencing">Fencing</option>
+                            <option value="Archery">Archery</option>
+                            <option value="Shooting">Shooting</option>
+                            <option value="Bowling">Bowling</option>
+                            <option value="Curling">Curling</option>
+                            <option value="Ping Pong">Ping Pong</option>
+                            <option value="Racquetball">Racquetball</option>
+                            <option value="Squash">Squash</option>
+                            <option value="Handball">Handball</option>
+                            <option value="Ultimate Frisbee">Ultimate Frisbee</option>
+                            <option value="Disc Golf">Disc Golf</option>
+                            <option value="Horseback Riding">Horseback Riding</option>
+                            <option value="Polo">Polo</option>
+                            <option value="Water Polo">Water Polo</option>
+                            <option value="Sailing">Sailing</option>
+                            <option value="Kayaking">Kayaking</option>
+                            <option value="Canoeing">Canoeing</option>
+                            <option value="Rafting">Rafting</option>
+                            <option value="Mountain Biking">Mountain Biking</option>
+                            <option value="BMX">BMX</option>
+                            <option value="Motocross">Motocross</option>
+                            <option value="Auto Racing">Auto Racing</option>
+                            <option value="Dirt Bike Racing">Dirt Bike Racing</option>
+                            <option value="Ice Skating">Ice Skating</option>
+                            <option value="Figure Skating">Figure Skating</option>
+                            <option value="Speed Skating">Speed Skating</option>
+                            <option value="Roller Skating">Roller Skating</option>
+                            <option value="Roller Derby">Roller Derby</option>
+                            <option value="Dance">Dance</option>
+                            <option value="Cheerleading">Cheerleading</option>
+                            <option value="Color Guard">Color Guard</option>
+                            <option value="Marching Band">Marching Band</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="number" id="profileFeet" placeholder="Feet" min="0" max="9">
+                        <input type="number" id="profileInches" placeholder="Inches" min="0" max="11">
+                        <div class="warning-message" id="profileWarning"></div>
+                        <div class="button-group">
+                            <button onclick="saveProfileData(event)">Save</button>
+                            <button class="cancel-button" onclick="closeModal('profile')">Cancel</button>
+                            <button onclick="toggleHistory('profile', event)">History</button>
+                        </div>
+                        <div class="history-view" id="profileHistory"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weight Modal -->
+            <div id="weightModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Body Weight</h2>
+                        <button class="close-modal" onclick="closeModal('weight')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="date-input-container">
+                            <input type="date" id="weightDate">
+                            <button class="calendar-button" onclick="toggleCalendar('weight', event)">📅</button>
+                            <div id="weightCalendar" class="calendar-popup">
+                                <div class="calendar-header">
+                                    <button onclick="changeMonth('weight', -1)">←</button>
+                                    <span id="weightCalendarMonth"></span>
+                                    <button onclick="changeMonth('weight', 1)">→</button>
+                                </div>
+                                <div class="calendar-grid" id="weightCalendarGrid"></div>
+                            </div>
+                        </div>
+                        <input type="number" id="bodyWeight" placeholder="Weight in pounds">
+                        <div class="warning-message" id="weightWarning"></div>
+                        <div class="button-group">
+                            <button onclick="saveWeightData(event)">Save</button>
+                            <button class="cancel-button" onclick="closeModal('weight')">Cancel</button>
+                            <button onclick="toggleHistory('weight', event)">History</button>
+                        </div>
+                        <div class="history-view" id="weightHistory"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lifting Modal -->
+            <div id="liftingModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Lifting</h2>
+                        <button class="close-modal" onclick="closeModal('lifting')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="date-input-container">
+                            <input type="date" id="liftingDate">
+                            <button class="calendar-button" onclick="toggleCalendar('lifting', event)">📅</button>
+                            <div id="liftingCalendar" class="calendar-popup">
+                                <div class="calendar-header">
+                                    <button onclick="changeMonth('lifting', -1)">←</button>
+                                    <span id="liftingCalendarMonth"></span>
+                                    <button onclick="changeMonth('lifting', 1)">→</button>
+                                </div>
+                                <div class="calendar-grid" id="liftingCalendarGrid"></div>
+                            </div>
+                        </div>
+                        <input type="number" id="liftingScore" placeholder="ASC Score" step="0.01" readonly>
+                        <div class="warning-message" id="liftingWarning"></div>
+                        <div class="button-group">
+                            <button onclick="saveLiftingData(event)">Save</button>
+                            <button class="cancel-button" onclick="closeModal('lifting')">Cancel</button>
+                            <button onclick="toggleHistory('lifting', event)">History</button>
+                        </div>
+                        <div class="history-view" id="liftingHistory"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conditioning Modal -->
+            <div id="conditioningModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Other Data</h2>
+                        <button class="close-modal" onclick="closeModal('conditioning')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="date-input-container">
+                            <input type="date" id="conditioningDate">
+                            <button class="calendar-button" onclick="toggleCalendar('conditioning', event)">📅</button>
+                            <div id="conditioningCalendar" class="calendar-popup">
+                                <div class="calendar-header">
+                                    <button onclick="changeMonth('conditioning', -1)">←</button>
+                                    <span id="conditioningCalendarMonth"></span>
+                                    <button onclick="changeMonth('conditioning', 1)">→</button>
+                                </div>
+                                <div class="calendar-grid" id="conditioningCalendarGrid"></div>
+                            </div>
+                        </div>
+                        <select id="conditioningType">
+                            <option value="">Select Type</option>
+                            <option value="40_yard_dash">40 Yard Dash</option>
+                            <option value="max_wattage">Max Wattage</option>
+                            <option value="max_sprint">Max Sprint Speed</option>
+                            <option value="max_vertical_jump">Max Vertical Jump</option>
+                            <option value="5_10_5">5-10-5</option>
+                        </select>
+                        <input type="number" id="conditioningValue" placeholder="Enter value">
+                        <div class="warning-message" id="conditioningWarning"></div>
+                        <div class="button-group">
+                            <button onclick="saveConditioningData(event)">Save</button>
+                            <button onclick="clearConditioningForm(event)">Clear Form</button>
+                            <button class="cancel-button" onclick="closeModal('conditioning')">Cancel</button>
+                            <button onclick="toggleHistory('conditioning', event)">History</button>
+                        </div>
+                        <div class="history-view" id="conditioningHistory"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="top-row">
+                <div class="score-group">
+                    <div class="input-box">
+                        <span class="input-label">ASC</span>
+                        <span id="totalScore">0.00</span>
+                    </div>
+                    <div class="input-box">
+                        <span class="input-label">PSC</span>
+                        <input type="number" id="projectedScore" step="0.01" min="0">
+                    </div>
+                </div>
+            </div>
+            <div id="calculationBoxes"></div>
+            <div class="button-row">
+                <button id="nextExerciseBtn" style="margin-top: 20px;">Next Exercise</button>
+            </div>
+            <div class="button-row" style="margin-top: 20px;">
+                <button id="doneButton">Done</button>
+                <button id="cancelButton">Cancel</button>
+            </div>
+        </div>
+    
+        <script src="exercise-database-extracted.js"></script>
+        <script>
+            
+// Function to get exercise coefficient from API with fallback
+async function getExerciseCoefficient(exerciseName) {
+    try {
+        const response = await fetch('/.netlify/functions/exercise-coefficient?exercise=' + encodeURIComponent(exerciseName));
+        const data = await response.json();
+        if (data.error) {
+            console.error('Exercise not found:', exerciseName);
+            return null;
+        }
+        return data.coefficient;
+    } catch (error) {
+        console.error('Error fetching exercise coefficient from API:', error);
+        // Fallback to local exercise database if API is not available
+        if (typeof exercisedatabase !== 'undefined') {
+            console.log('Using local exercise database as fallback for:', exerciseName);
+            const coefficient = exercisedatabase[exerciseName.toLowerCase()];
+            return coefficient !== undefined ? coefficient : null;
+        }
+        console.error('No exercise database available');
+        return null;
+    }
+}
+
+// Function to get all exercises from API with fallback
+async function getAllExercises() {
+    try {
+        const response = await fetch('/.netlify/functions/exercise-coefficient');
+        const data = await response.json();
+        return data.exercises || [];
+    } catch (error) {
+        console.error('Error fetching exercises from API:', error);
+        // Fallback to local exercise database if API is not available
+        if (typeof exercisedatabase !== 'undefined') {
+            console.log('Using local exercise database as fallback');
+            return Object.keys(exercisedatabase);
+        }
+        console.error('No exercise database available');
+        return [];
+    }
+}
+
+    
+            const conset = {1: 1.0, 2: 1.01, 3: 1.02, 4: 1.03, 5: 1.04, 6: 1.05, 7: 1.06, 8: 1.07, 9: 1.08, 10: 1.09, 11: 1.1, 12: 1.11, 13: 1.12, 14: 1.13, 15: 1.14,};
+            const conreps = {
+  1: 1.010, 2: 1.021, 3: 1.032, 4: 1.043, 5: 1.054,
+  6: 1.065, 7: 1.076, 8: 1.087, 9: 1.098, 10: 1.109,
+  11: 1.120, 12: 1.131, 13: 1.142, 14: 1.153, 15: 1.164,
+  16: 1.175, 17: 1.186, 18: 1.197, 19: 1.208, 20: 1.219,
+  21: 1.230, 22: 1.241, 23: 1.252, 24: 1.263, 25: 1.274,
+  26: 1.285, 27: 1.296, 28: 1.307, 29: 1.318, 30: 1.329,
+  31: 1.340, 32: 1.351, 33: 1.362, 34: 1.373, 35: 1.384,
+  36: 1.395, 37: 1.406, 38: 1.417, 39: 1.428, 40: 1.439,
+  41: 1.450, 42: 1.461, 43: 1.472, 44: 1.483, 45: 1.494,
+  46: 1.505, 47: 1.516, 48: 1.527, 49: 1.538, 50: 1.549,
+  51: 1.560, 52: 1.571, 53: 1.582, 54: 1.593, 55: 1.604,
+  56: 1.615, 57: 1.626, 58: 1.637, 59: 1.648, 60: 1.659,
+  61: 1.670, 62: 1.681, 63: 1.692, 64: 1.703, 65: 1.714,
+  66: 1.725, 67: 1.736, 68: 1.747, 69: 1.758, 70: 1.769,
+  71: 1.780, 72: 1.791, 73: 1.802, 74: 1.813, 75: 1.824,
+  76: 1.835, 77: 1.846, 78: 1.857, 79: 1.868, 80: 1.879,
+  81: 1.890, 82: 1.901, 83: 1.912, 84: 1.923, 85: 1.934,
+  86: 1.945, 87: 1.956, 88: 1.967, 89: 1.978, 90: 1.989,
+  91: 2.000, 92: 2.011, 93: 2.022, 94: 2.033, 95: 2.044,
+  96: 2.055, 97: 2.066, 98: 2.077, 99: 2.088, 100: 2.099,
+  101: 2.110, 102: 2.121, 103: 2.132, 104: 2.143, 105: 2.154,
+  106: 2.165, 107: 2.176, 108: 2.187, 109: 2.198, 110: 2.209,
+  111: 2.220, 112: 2.231, 113: 2.242, 114: 2.253, 115: 2.264,
+  116: 2.275, 117: 2.286, 118: 2.297, 119: 2.308, 120: 2.319
+};
+            const tempodata = {
+  1: 1.010, 2: 1.021, 3: 1.032, 4: 1.043, 5: 1.054,
+  6: 1.065, 7: 1.076, 8: 1.087, 9: 1.098, 10: 1.109,
+  11: 1.120, 12: 1.131, 13: 1.142, 14: 1.153, 15: 1.164,
+  16: 1.175, 17: 1.186, 18: 1.197, 19: 1.208, 20: 1.219,
+  21: 1.230, 22: 1.241, 23: 1.252, 24: 1.263, 25: 1.274,
+  26: 1.285, 27: 1.296, 28: 1.307, 29: 1.318, 30: 1.329,
+  31: 1.340, 32: 1.351, 33: 1.362, 34: 1.373, 35: 1.384,
+  36: 1.395, 37: 1.406, 38: 1.417, 39: 1.428, 40: 1.439,
+  41: 1.450, 42: 1.461, 43: 1.472, 44: 1.483, 45: 1.494
+};
+
+function heightconvert(feet, inches) {
+    return (feet * 12 + inches) * 0.0254;
+}
+
+function getsum(tempo) {
+    return tempo.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+}
+
+function createCalculationBox(index) {
+    const content = document.createElement('div');
+    content.className = 'content';
+    content.id = `exerciseContainer${index}`;
+    content.style.display = index === 1 ? 'block' : 'none'; // Only show first exercise initially
+    content.innerHTML = `
+        <div class="calc-row">
+            <div class="calc-box">
+                <div class="exercise-select-container">
+                    <input type="text" class="exercise-search" id="exerciseSearch${index}" placeholder="Search exercise...">
+                    <select id="exercise${index}" class="exercise-select" style="display: none;">
+                        <option value="">Select</option>
+                    </select>
+                    <div class="exercise-options" id="exerciseOptions${index}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="sets-container" id="setsContainer${index}">
+            <div class="set-row">
+                <input type="number" class="set-input" value="1" readonly>
+                <input type="number" class="set-input" placeholder="Weight">
+                <input type="number" class="set-input" placeholder="Reps">
+                <input type="number" class="set-input" placeholder="Tempo">
+                <input type="number" class="set-input set-value" placeholder="Value" readonly>
+                <button class="calculate-set">Next Set</button>
+            </div>
+        </div>
+        <div id="results${index}" class="results"></div>
+    `;
+    return content;
+}
+
+async function setupExerciseSearch(index) {
+    const searchInput = document.getElementById(`exerciseSearch${index}`);
+    const optionsContainer = document.getElementById(`exerciseOptions${index}`);
+    const select = document.getElementById(`exercise${index}`);
+    let selectedExercise = '';
+    let exercises = [];
+
+    // Load exercises from API
+    try {
+        exercises = await getAllExercises();
+    } catch (error) {
+        console.error('Failed to load exercises:', error);
+        exercises = [];
+    }
+    
+    function updateOptions(searchTerm) {
+        const filteredExercises = exercises.filter(exercise => 
+            exercise.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        optionsContainer.innerHTML = '';
+        
+        filteredExercises.forEach(exercise => {
+            const option = document.createElement('div');
+            option.className = 'exercise-option';
+            if (exercise === selectedExercise) {
+                option.classList.add('selected');
+            }
+            option.textContent = exercise.charAt(0).toUpperCase() + exercise.slice(1);
+            option.addEventListener('click', () => {
+                selectedExercise = exercise;
+                searchInput.value = option.textContent;
+                select.value = exercise;
+                optionsContainer.style.display = 'none';
+                // Update the original select element
+                const event = new Event('change');
+                select.dispatchEvent(event);
+            });
+            optionsContainer.appendChild(option);
+        });
+
+        optionsContainer.style.display = filteredExercises.length > 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        updateOptions(e.target.value);
+    });
+
+    searchInput.addEventListener('focus', () => {
+        updateOptions(searchInput.value);
+    });
+
+    // Close options when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !optionsContainer.contains(e.target)) {
+            optionsContainer.style.display = 'none';
+        }
+    });
+}
+
+async function populateExercises() {
+    try {
+        const exercises = await getAllExercises();
+        const selects = document.querySelectorAll('select[id^="exercise"]');
+        selects.forEach(select => {
+            exercises.forEach(exercise => {
+                let option = document.createElement('option');
+                option.value = exercise;
+                option.textContent = exercise.charAt(0).toUpperCase() + exercise.slice(1);
+                select.appendChild(option);
+            });
+        });
+    } catch (error) {
+        console.error('Failed to populate exercises:', error);
+    }
+}
+
+let SVMap = new Map();
+
+function updateTotalScore() {
+    const values = Array.from(SVMap.values());
+    const roundTotal = Math.round(values.reduce((a, b) => a + b, 0) * 100) / 100;
+    document.getElementById('totalScore').textContent = roundTotal.toFixed(2);
+    checkProjectedScore();
+}
+
+function checkProjectedScore() {
+    const actualScore = parseFloat(document.getElementById('totalScore').textContent);
+    const projectedScore = parseFloat(document.getElementById('projectedScore').value);
+    const projectedScoreElement = document.getElementById('projectedScore');
+
+    if (actualScore > projectedScore && !isNaN(projectedScore)) {
+        projectedScoreElement.classList.add('red-text');
+    } else {
+        projectedScoreElement.classList.remove('red-text');
+    }
+}
+
+async function calculateStrength(index, setRow) {
+    // Get feet and inches from top-row
+    const feet = parseInt(document.getElementById('feet').value) || 0;
+    const inches = parseInt(document.getElementById('inches').value) || 0;
+    const exercise = document.getElementById(`exercise${index}`).value;
+    const inputs = setRow.querySelectorAll('.set-input');
+    const set = parseInt(inputs[0].value);
+    const weight = parseInt(inputs[1].value);
+    const reps = parseInt(inputs[2].value);
+    const tempo = parseInt(inputs[3].value);
+
+    if (!exercise) {
+        alert('Please select an exercise first');
+        return;
+    }
+
+    try {
+        const exerciseCoefficient = await getExerciseCoefficient(exercise);
+        if (exerciseCoefficient === null) {
+            alert('Exercise coefficient not found');
+            return;
+        }
+
+        const heightmeters = heightconvert(feet, inches);
+        const exerciseifself = heightmeters * exerciseCoefficient;
+        const convertset = conset[set] || 1;
+        const convertreps = conreps[reps] || 1;
+        const temposum = getsum(tempo);
+        const converttempo = tempodata[temposum] || 1;
+
+        const volume = weight * convertset * convertreps * converttempo;
+        const ex1set1KPSV = Math.round((exerciseifself * volume) * 0.01 * 100) / 100;
+
+        const rowKey = `${index}-${set}`;
+        if (SVMap.has(rowKey)) {
+            SVMap.delete(rowKey);
+        }
+        
+        SVMap.set(rowKey, ex1set1KPSV);
+        updateTotalScore();
+
+        inputs[4].value = ex1set1KPSV.toFixed(4);
+
+        const setsContainer = document.getElementById(`setsContainer${index}`);
+        const allSetRows = setsContainer.querySelectorAll('.set-row');
+        if (setRow === allSetRows[allSetRows.length - 1]) {
+            const newSetRow = document.createElement('div');
+            newSetRow.className = 'set-row';
+            newSetRow.innerHTML = `
+                <input type="number" class="set-input" value="${set + 1}" readonly>
+                <input type="number" class="set-input" value="${weight}" placeholder="Weight">
+                <input type="number" class="set-input" value="${reps}" placeholder="Reps">
+                <input type="number" class="set-input" value="${tempo}" placeholder="Tempo">
+                <input type="number" class="set-input set-value" placeholder="Value" readonly>
+                <button class="calculate-set">Next Set</button>
+            `;
+            setsContainer.appendChild(newSetRow);
+
+            setupSetRowListeners(newSetRow, index);
+        }
+    } catch (error) {
+        console.error('Error calculating strength:', error);
+        alert('Error calculating strength. Please try again.');
+    }
+}
+
+function setupSetRowListeners(setRow, index) {
+    const calculateButton = setRow.querySelector('.calculate-set');
+    const inputs = setRow.querySelectorAll('.set-input:not([readonly])');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const setValue = setRow.querySelector('.set-value');
+            if (setValue.value) {
+                calculateButton.textContent = 'Recalculate';
+            }
+        });
+    });
+
+    calculateButton.addEventListener('click', function() {
+        calculateStrength(index, setRow);
+        calculateButton.textContent = 'Next Set';
+    });
+}
+
+async function setupEventListeners(index) {
+    const setsContainer = document.getElementById(`setsContainer${index}`);
+    const firstSetRow = setsContainer.querySelector('.set-row');
+    setupSetRowListeners(firstSetRow, index);
+    await setupExerciseSearch(index);
+}
+
+const calculationBoxes = document.getElementById('calculationBoxes');
+for (let i = 1; i <= 16; i++) {
+    calculationBoxes.appendChild(createCalculationBox(i));
+}
+
+// Initialize exercises and event listeners
+async function initializeExercises() {
+    await populateExercises();
+    for (let i = 1; i <= 16; i++) {
+        await setupEventListeners(i);
+    }
+}
+
+initializeExercises();
+
+        document.getElementById('projectedScore').addEventListener('input', checkProjectedScore);
+
+        // Initialize hidden date input and add event listener for date change to update profile, weight, and conditioning data
+        document.getElementById('workoutDate').valueAsDate = new Date();
+        document.getElementById('workoutDate').addEventListener('change', function() {
+            loadProfileData();
+            loadWeightData();
+            loadConditioningData();
+        });
+
+        // Add event listeners for individual date inputs
+        document.getElementById('profileDate').addEventListener('change', function() {
+            loadProfileData();
+            updateProfileDisplay();
+        });
+
+        document.getElementById('weightDate').addEventListener('change', function() {
+            loadWeightData();
+            updateWeightDisplay();
+        });
+
+        document.getElementById('conditioningDate').addEventListener('change', function() {
+            loadConditioningData();
+            updateConditioningDisplay();
+        });
+
+        document.getElementById('liftingDate').addEventListener('change', function() {
+            loadLiftingData();
+            updateLiftingDisplay();
+        });
+
+        // Calendar functions
+        function toggleCalendar(type, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            const calendar = document.getElementById(`${type}Calendar`);
+            calendar.style.display = calendar.style.display === 'none' ? 'block' : 'none';
+            if (calendar.style.display === 'block') {
+                updateCalendar(type);
+            }
+        }
+
+        function updateCalendar(type) {
+            const date = new Date(document.getElementById(`${type}Date`).value);
+            const calendar = document.getElementById(`${type}Calendar`);
+            const monthDisplay = document.getElementById(`${type}CalendarMonth`);
+            const grid = document.getElementById(`${type}CalendarGrid`);
+            
+            // Set month display
+            monthDisplay.textContent = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            // Get first day of month and total days
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            
+            // Get history data
+            const history = JSON.parse(localStorage.getItem(`${type}History`) || '[]');
+            
+            // Clear grid
+            grid.innerHTML = '';
+            
+            // Add empty cells for days before first day of month
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                grid.appendChild(createDayElement(''));
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const currentDate = new Date(date.getFullYear(), date.getMonth(), day);
+                const dateString = currentDate.toISOString().split('T')[0];
+                const dayData = history.filter(item => item.date === dateString);
+                const hasData = dayData.length > 0;
+                const isSelected = dateString === document.getElementById(`${type}Date`).value;
+                
+                const dayElement = createDayElement(day, hasData, isSelected);
+                if (type === 'conditioning' && dayData.length > 1) {
+                    // Add multiple dots for multiple entries
+                    dayElement.setAttribute('data-entries', dayData.length);
+                    dayElement.classList.add('multiple-entries');
+                }
+                dayElement.onclick = () => selectDate(type, currentDate);
+                grid.appendChild(dayElement);
+            }
+        }
+
+        function createDayElement(day, hasData = false, isSelected = false) {
+            const div = document.createElement('div');
+            div.className = 'calendar-day';
+            if (hasData) div.classList.add('has-data');
+            if (isSelected) div.classList.add('selected');
+            div.textContent = day;
+            return div;
+        }
+
+        function changeMonth(type, delta) {
+            const date = new Date(document.getElementById(`${type}Date`).value);
+            date.setMonth(date.getMonth() + delta);
+            document.getElementById(`${type}Date`).value = date.toISOString().split('T')[0];
+            updateCalendar(type);
+        }
+
+        function selectDate(type, date) {
+            document.getElementById(`${type}Date`).value = date.toISOString().split('T')[0];
+            document.getElementById(`${type}Calendar`).style.display = 'none';
+            updateCalendar(type);
+            
+            // Load data for the selected date
+            if (type === 'profile') {
+                loadProfileData();
+                updateProfileDisplay();
+            } else if (type === 'weight') {
+                loadWeightData();
+                updateWeightDisplay();
+            } else if (type === 'conditioning') {
+                loadConditioningData();
+                updateConditioningDisplay();
+            }
+        }
+
+        // Close calendar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.calendar-button') && !e.target.closest('.calendar-popup')) {
+                document.querySelectorAll('.calendar-popup').forEach(calendar => {
+                    calendar.style.display = 'none';
+                });
+            }
+        });
+
+// Replace done button with save functionality
+document.getElementById('doneButton').textContent = 'Done';
+document.getElementById('doneButton').addEventListener('click', () => {
+    const score = document.getElementById('totalScore').textContent;
+    const date = document.getElementById('workoutDate').value;
+    
+    // Save ASC score to lifting data
+    if (score && score !== '0.00') {
+        document.getElementById('liftingScore').value = score;
+        updateLiftingDisplay();
+        
+        // Save lifting data
+        const liftingData = {
+            score: score,
+            date: date
+        };
+
+        const liftingHistory = JSON.parse(localStorage.getItem('liftingHistory') || '[]');
+        
+        // Check for existing entry on the same date
+        const existingIndex = liftingHistory.findIndex(item => item.date === date);
+        if (existingIndex !== -1) {
+            liftingHistory[existingIndex] = liftingData;
+        } else {
+            liftingHistory.push(liftingData);
+        }
+
+        localStorage.setItem('liftingHistory', JSON.stringify(liftingHistory));
+    }
+    
+    // Save the ASC score to training history
+    const trainingHistory = JSON.parse(localStorage.getItem('trainingHistory') || '[]');
+    trainingHistory.push({
+        type: 'ASC Score',
+        score: score,
+        date: date
+    });
+    localStorage.setItem('trainingHistory', JSON.stringify(trainingHistory));
+    
+    // Reset everything to initial state (same as reset button)
+    resetToInitialState();
+});
+
+    // Function to reset form to starting screen
+    function resetFormToStartingScreen() {
+        // Reset AKPSC score
+        document.getElementById('totalScore').textContent = '0.00';
+        
+        // Reset projected score
+        document.getElementById('projectedScore').value = '';
+        document.getElementById('projectedScore').classList.remove('red-text');
+        
+        // Clear all exercise containers
+        for (let i = 1; i <= 16; i++) {
+            const container = document.getElementById(`exerciseContainer${i}`);
+            if (container) {
+                // Hide all containers except the first one
+                container.style.display = i === 1 ? 'block' : 'none';
+                
+                // Clear all inputs in the container
+                const inputs = container.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (!input.readOnly) {
+                        input.value = '';
+                    }
+                });
+                
+                // Reset exercise search
+                const searchInput = container.querySelector('.exercise-search');
+                if (searchInput) {
+                    searchInput.value = '';
+                }
+                
+                // Reset exercise select
+                const exerciseSelect = container.getElementById(`exercise${i}`);
+                if (exerciseSelect) {
+                    exerciseSelect.value = '';
+                }
+                
+                // Clear results
+                const results = container.querySelector('.results');
+                if (results) {
+                    results.innerHTML = '';
+                }
+                
+                // Reset sets container to only have the first set row
+                const setsContainer = container.querySelector('.sets-container');
+                if (setsContainer) {
+                    const setRows = setsContainer.querySelectorAll('.set-row');
+                    // Keep only the first set row, remove the rest
+                    for (let j = 1; j < setRows.length; j++) {
+                        setRows[j].remove();
+                    }
+                    
+                    // Reset the first set row
+                    const firstSetRow = setsContainer.querySelector('.set-row');
+                    if (firstSetRow) {
+                        const setInputs = firstSetRow.querySelectorAll('input');
+                        setInputs[0].value = '1'; // Set number
+                        setInputs[1].value = ''; // Weight
+                        setInputs[2].value = ''; // Reps
+                        setInputs[3].value = ''; // Tempo
+                        setInputs[4].value = ''; // Value
+                    }
+                }
+            }
+        }
+        
+        // Reset current exercise index
+        currentExerciseIndex = 1;
+        
+        // Reset button text
+        document.getElementById('nextExerciseBtn').textContent = 'Next Exercise';
+        
+        // Clear SVMap
+        SVMap.clear();
+        
+        // Close all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+        
+        // Reset all history views
+        document.querySelectorAll('.history-view').forEach(view => {
+            view.style.display = 'none';
+        });
+        
+        // Reset height inputs to saved values or empty
+        const savedFeet = localStorage.getItem('og_cal_feet');
+        const savedInches = localStorage.getItem('og_cal_inches');
+        document.getElementById('feet').value = savedFeet || '';
+        document.getElementById('inches').value = savedInches || '';
+    }
+
+    // Function to reset calculation boxes to starting position
+    function resetCalculationBoxes() {
+        // Reset ASC score
+        document.getElementById('totalScore').textContent = '0.00';
+        
+        // Reset projected score
+        document.getElementById('projectedScore').value = '';
+        document.getElementById('projectedScore').classList.remove('red-text');
+        
+        // Clear all exercise containers
+        for (let i = 1; i <= 16; i++) {
+            const container = document.getElementById(`exerciseContainer${i}`);
+            if (container) {
+                // Hide all containers except the first one
+                container.style.display = i === 1 ? 'block' : 'none';
+                
+                // Clear all inputs in the container (including readonly value inputs)
+                const inputs = container.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (!input.readOnly || input.classList.contains('set-value')) {
+                        input.value = '';
+                    }
+                });
+                
+                // Reset exercise search
+                const searchInput = container.querySelector('.exercise-search');
+                if (searchInput) {
+                    searchInput.value = '';
+                }
+                
+                // Reset exercise select
+                const exerciseSelect = container.getElementById(`exercise${i}`);
+                if (exerciseSelect) {
+                    exerciseSelect.value = '';
+                }
+                
+                // Clear results
+                const results = container.querySelector('.results');
+                if (results) {
+                    results.innerHTML = '';
+                }
+                
+                // Reset sets container to only have the first set row
+                const setsContainer = container.querySelector('.sets-container');
+                if (setsContainer) {
+                    // Remove all set rows except the first one (iterate backwards to avoid issues)
+                    const setRows = setsContainer.querySelectorAll('.set-row');
+                    for (let j = setRows.length - 1; j > 0; j--) {
+                        setRows[j].remove();
+                    }
+                    
+                    // Reset the first set row completely
+                    const firstSetRow = setsContainer.querySelector('.set-row');
+                    if (firstSetRow) {
+                        const setInputs = firstSetRow.querySelectorAll('input');
+                        if (setInputs.length >= 5) {
+                            setInputs[0].value = '1'; // Set number (readonly)
+                            setInputs[1].value = ''; // Weight
+                            setInputs[2].value = ''; // Reps
+                            setInputs[3].value = ''; // Tempo
+                            setInputs[4].value = ''; // Value (readonly)
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Reset current exercise index
+        currentExerciseIndex = 1;
+        
+        // Reset button text
+        document.getElementById('nextExerciseBtn').textContent = 'Next Exercise';
+        
+        // Clear SVMap
+        SVMap.clear();
+        
+        // Reset height inputs to saved values or empty
+        const savedFeet = localStorage.getItem('og_cal_feet');
+        const savedInches = localStorage.getItem('og_cal_inches');
+        document.getElementById('feet').value = savedFeet || '';
+        document.getElementById('inches').value = savedInches || '';
+    }
+
+            // Function to reset everything to initial state (like page refresh)
+        function resetToInitialState() {
+            // Reset ASC score
+            document.getElementById('totalScore').textContent = '0.00';
+            
+            // Reset projected score
+            document.getElementById('projectedScore').value = '';
+            document.getElementById('projectedScore').classList.remove('red-text');
+            
+            // Completely clear and recreate all exercise containers
+            const calculationBoxes = document.getElementById('calculationBoxes');
+            calculationBoxes.innerHTML = '';
+            
+            // Recreate all exercise containers
+            for (let i = 1; i <= 16; i++) {
+                calculationBoxes.appendChild(createCalculationBox(i));
+            }
+            
+            // Repopulate exercises and setup event listeners
+            initializeExercises();
+            
+            // Reset current exercise index
+            currentExerciseIndex = 1;
+            
+            // Reset button text
+            document.getElementById('nextExerciseBtn').textContent = 'Next Exercise';
+            
+            // Clear SVMap
+            SVMap.clear();
+            
+            // Close all modals
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            
+            // Reset all history views
+            document.querySelectorAll('.history-view').forEach(view => {
+                view.style.display = 'none';
+            });
+        
+        // Reset height inputs to saved values or empty
+        const savedFeet = localStorage.getItem('og_cal_feet');
+        const savedInches = localStorage.getItem('og_cal_inches');
+        document.getElementById('feet').value = savedFeet || '';
+        document.getElementById('inches').value = savedInches || '';
+        
+        // Reset all info section displays to initial state
+        document.getElementById('profileCurrentValue').textContent = 'Click to edit';
+        document.getElementById('weightCurrentValue').textContent = 'Click to edit';
+        document.getElementById('liftingCurrentValue').textContent = 'Click to edit';
+        document.getElementById('conditioningCurrentValue').textContent = 'Click to edit';
+        
+        // Clear all info section inputs
+        document.getElementById('profileName').value = '';
+        document.getElementById('profileSport').value = '';
+        document.getElementById('profileFeet').value = '';
+        document.getElementById('profileInches').value = '';
+        document.getElementById('bodyWeight').value = '';
+        document.getElementById('liftingScore').value = '';
+        document.getElementById('conditioningType').value = '';
+        document.getElementById('conditioningValue').value = '';
+        
+        // Set today's date for all date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('workoutDate').value = today;
+        document.getElementById('profileDate').value = today;
+        document.getElementById('weightDate').value = today;
+        document.getElementById('liftingDate').value = today;
+        document.getElementById('conditioningDate').value = today;
+        
+        // Check if it's a new day and clear weight/lifting data if needed
+        checkForNewDay();
+        
+        // Load fresh data for all sections
+        loadProfileData();
+        loadWeightData();
+        loadLiftingData();
+        loadConditioningData();
+        
+        // Update all displays
+        updateProfileDisplay();
+        updateWeightDisplay();
+        updateLiftingDisplay();
+        updateConditioningDisplay();
+    }
+
+// Add reset button functionality
+document.getElementById('cancelButton').textContent = 'Reset';
+document.getElementById('cancelButton').addEventListener('click', () => {
+    // Reset everything to initial state (like page refresh)
+    resetToInitialState();
+});
+
+        // Function to check if it's a new day and clear weight/lifting/conditioning data if needed
+        function checkForNewDay() {
+            const lastCheckDate = localStorage.getItem('lastDayCheck');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (lastCheckDate !== today) {
+                // It's a new day, clear weight, lifting, and conditioning data from display
+                document.getElementById('bodyWeight').value = '';
+                document.getElementById('liftingScore').value = '';
+                document.getElementById('conditioningType').value = '';
+                document.getElementById('conditioningValue').value = '';
+                
+                // Update displays to show empty state
+                updateWeightDisplay();
+                updateLiftingDisplay();
+                updateConditioningDisplay();
+                
+                // Store today's date as last check
+                localStorage.setItem('lastDayCheck', today);
+            }
+        }
+
+        window.onload = function() {
+            // Load saved height from localStorage
+            const savedFeet = localStorage.getItem('og_cal_feet');
+            const savedInches = localStorage.getItem('og_cal_inches');
+            
+            if (savedFeet) {
+                document.getElementById('feet').value = savedFeet;
+            }
+            if (savedInches) {
+                document.getElementById('inches').value = savedInches;
+            }
+
+            // Set default dates (hidden workout date and visible profile/weight/lifting/conditioning dates)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('workoutDate').value = today;
+            document.getElementById('profileDate').value = today;
+            document.getElementById('weightDate').value = today;
+            document.getElementById('liftingDate').value = today;
+            document.getElementById('conditioningDate').value = today;
+
+            // Check if it's a new day and clear weight/lifting data if needed
+            checkForNewDay();
+
+            // Load profile data
+            loadProfileData();
+            loadWeightData();
+            loadLiftingData();
+            loadConditioningData();
+            
+            // Update displays
+            updateProfileDisplay();
+            updateWeightDisplay();
+            updateLiftingDisplay();
+            updateConditioningDisplay();
+        }
+
+        // Function to load profile data from localStorage
+        function loadProfileData() {
+            const profileHistory = JSON.parse(localStorage.getItem('profileHistory') || '[]');
+            const currentDate = document.getElementById('profileDate').value;
+            
+            // First try to find data for the current date
+            const currentDateData = profileHistory.find(item => item.date === currentDate);
+            if (currentDateData) {
+                document.getElementById('profileName').value = currentDateData.name || '';
+                document.getElementById('profileSport').value = currentDateData.sport || '';
+                document.getElementById('profileFeet').value = currentDateData.feet || '';
+                document.getElementById('profileInches').value = currentDateData.inches || '';
+                
+                // Also update the main height inputs for consistency
+                document.getElementById('feet').value = currentDateData.feet || '';
+                document.getElementById('inches').value = currentDateData.inches || '';
+            } else {
+                // If no data for current date, load the latest data
+                if (profileHistory.length > 0) {
+                    const latestProfile = profileHistory[profileHistory.length - 1];
+                    document.getElementById('profileName').value = latestProfile.name || '';
+                    document.getElementById('profileSport').value = latestProfile.sport || '';
+                    document.getElementById('profileFeet').value = latestProfile.feet || '';
+                    document.getElementById('profileInches').value = latestProfile.inches || '';
+                    
+                    // Also update the main height inputs for consistency
+                    document.getElementById('feet').value = latestProfile.feet || '';
+                    document.getElementById('inches').value = latestProfile.inches || '';
+                } else {
+                    // Clear fields if no data exists
+                    document.getElementById('profileName').value = '';
+                    document.getElementById('profileSport').value = '';
+                    document.getElementById('profileFeet').value = '';
+                    document.getElementById('profileInches').value = '';
+                    
+                    // Also clear the main height inputs
+                    document.getElementById('feet').value = '';
+                    document.getElementById('inches').value = '';
+                }
+            }
+        }
+
+        // Function to load weight data from localStorage
+        function loadWeightData() {
+            const weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[]');
+            const currentDate = document.getElementById('weightDate').value;
+            const today = new Date().toISOString().split('T')[0];
+            
+            // First try to find data for the current date
+            const currentDateData = weightHistory.find(item => item.date === currentDate);
+            if (currentDateData) {
+                document.getElementById('bodyWeight').value = currentDateData.weight || '';
+            } else {
+                // If no data for current date and it's today, don't load previous data
+                if (currentDate === today) {
+                    document.getElementById('bodyWeight').value = '';
+                } else {
+                    // If no data for current date, load the latest data (only for past dates)
+                    if (weightHistory.length > 0) {
+                        const latestWeight = weightHistory[weightHistory.length - 1];
+                        document.getElementById('bodyWeight').value = latestWeight.weight || '';
+                    } else {
+                        // Clear field if no data exists
+                        document.getElementById('bodyWeight').value = '';
+                    }
+                }
+            }
+        }
+
+        // Function to load conditioning data from localStorage
+        function loadConditioningData() {
+            const conditioningHistory = JSON.parse(localStorage.getItem('conditioningHistory') || '[]');
+            const currentDate = document.getElementById('conditioningDate').value;
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Get all entries for the current date
+            const currentDateData = conditioningHistory.filter(item => item.date === currentDate);
+            if (currentDateData.length > 0) {
+                // Load the most recent entry for this date
+                const latestEntry = currentDateData.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))[0];
+                document.getElementById('conditioningType').value = latestEntry.type || '';
+                document.getElementById('conditioningValue').value = latestEntry.value || '';
+            } else {
+                // If no data for current date and it's today, don't load previous data
+                if (currentDate === today) {
+                    document.getElementById('conditioningType').value = '';
+                    document.getElementById('conditioningValue').value = '';
+                } else {
+                    // If no data for current date, load the latest data from any date (only for past dates)
+                    if (conditioningHistory.length > 0) {
+                        const latestConditioning = conditioningHistory.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))[0];
+                        document.getElementById('conditioningType').value = latestConditioning.type || '';
+                        document.getElementById('conditioningValue').value = latestConditioning.value || '';
+                    } else {
+                        // Clear fields if no data exists
+                        document.getElementById('conditioningType').value = '';
+                        document.getElementById('conditioningValue').value = '';
+                    }
+                }
+            }
+        }
+
+        // Function to load the most recent value for a specific conditioning type
+        function loadConditioningValueForType() {
+            const selectedType = document.getElementById('conditioningType').value;
+            if (!selectedType) {
+                document.getElementById('conditioningValue').value = '';
+                return;
+            }
+            
+            const conditioningHistory = JSON.parse(localStorage.getItem('conditioningHistory') || '[]');
+            
+            // Filter history for the selected type and sort by date (most recent first)
+            const typeHistory = conditioningHistory
+                .filter(item => item.type === selectedType)
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (typeHistory.length > 0) {
+                // Load the most recent value for this type
+                document.getElementById('conditioningValue').value = typeHistory[0].value || '';
+            } else {
+                // No previous data for this type
+                document.getElementById('conditioningValue').value = '';
+            }
+        }
+
+        // Function to load lifting data from localStorage
+        function loadLiftingData() {
+            const liftingHistory = JSON.parse(localStorage.getItem('liftingHistory') || '[]');
+            const currentDate = document.getElementById('liftingDate').value;
+            const today = new Date().toISOString().split('T')[0];
+            
+            // First try to find data for the current date
+            const currentDateData = liftingHistory.find(item => item.date === currentDate);
+            if (currentDateData) {
+                document.getElementById('liftingScore').value = currentDateData.score || '';
+            } else {
+                // If no data for current date and it's today, don't load previous data
+                if (currentDate === today) {
+                    document.getElementById('liftingScore').value = '';
+                } else {
+                    // If no data for current date, load the latest data (only for past dates)
+                    if (liftingHistory.length > 0) {
+                        const latestLifting = liftingHistory[liftingHistory.length - 1];
+                        document.getElementById('liftingScore').value = latestLifting.score || '';
+                    } else {
+                        // Clear field if no data exists
+                        document.getElementById('liftingScore').value = '';
+                    }
+                }
+            }
+        }
+
+        // Add event listeners for saving data when inputs change
+        document.getElementById('profileName').addEventListener('change', function() { updateProfileDisplay(); });
+        document.getElementById('profileSport').addEventListener('change', function() { updateProfileDisplay(); });
+        document.getElementById('profileFeet').addEventListener('change', function() { updateProfileDisplay(); });
+        document.getElementById('profileInches').addEventListener('change', function() { updateProfileDisplay(); });
+        document.getElementById('bodyWeight').addEventListener('change', function() { updateWeightDisplay(); });
+        document.getElementById('conditioningType').addEventListener('change', function() { 
+            loadConditioningValueForType();
+            updateConditioningDisplay(); 
+        });
+        document.getElementById('conditioningValue').addEventListener('change', function() { updateConditioningDisplay(); });
+
+        // Function to save profile data
+        function saveProfileData(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const name = document.getElementById('profileName').value;
+            const sport = document.getElementById('profileSport').value;
+            const feet = document.getElementById('profileFeet').value;
+            const inches = document.getElementById('profileInches').value;
+            const date = document.getElementById('profileDate').value;
+
+            if (name || sport || feet || inches) {
+                const profileData = {
+                    name: name,
+                    sport: sport,
+                    feet: feet,
+                    inches: inches,
+                    date: date
+                };
+
+                const profileHistory = JSON.parse(localStorage.getItem('profileHistory') || '[]');
+                
+                // Check for existing entry on the same date
+                const existingIndex = profileHistory.findIndex(item => item.date === date);
+                if (existingIndex !== -1) {
+                    profileHistory[existingIndex] = profileData;
+                } else {
+                    profileHistory.push(profileData);
+                }
+
+                localStorage.setItem('profileHistory', JSON.stringify(profileHistory));
+                
+                // Also update the main height inputs for consistency
+                if (feet) localStorage.setItem('og_cal_feet', feet);
+                if (inches) localStorage.setItem('og_cal_inches', inches);
+                document.getElementById('feet').value = feet;
+                document.getElementById('inches').value = inches;
+                
+                updateProfileDisplay();
+                closeModal('profile');
+            }
+        }
+
+        // Function to save weight data
+        function saveWeightData(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const weight = document.getElementById('bodyWeight').value;
+            const date = document.getElementById('weightDate').value;
+
+            if (weight) {
+                const weightData = {
+                    weight: weight,
+                    date: date
+                };
+
+                const weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[]');
+                
+                // Check for existing entry on the same date
+                const existingIndex = weightHistory.findIndex(item => item.date === date);
+                if (existingIndex !== -1) {
+                    weightHistory[existingIndex] = weightData;
+                } else {
+                    weightHistory.push(weightData);
+                }
+
+                localStorage.setItem('weightHistory', JSON.stringify(weightHistory));
+                updateWeightDisplay();
+                closeModal('weight');
+            }
+        }
+
+        // Function to save conditioning data
+        function saveConditioningData(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const type = document.getElementById('conditioningType').value;
+            const value = document.getElementById('conditioningValue').value;
+            const date = document.getElementById('conditioningDate').value;
+
+            if (type && value) {
+                const conditioningData = {
+                    type: type,
+                    value: value,
+                    date: date,
+                    timestamp: new Date().toISOString() // Add timestamp for unique identification
+                };
+
+                const conditioningHistory = JSON.parse(localStorage.getItem('conditioningHistory') || '[]');
+                
+                // Always add new entry (allow multiple entries per day)
+                conditioningHistory.push(conditioningData);
+
+                localStorage.setItem('conditioningHistory', JSON.stringify(conditioningHistory));
+                updateConditioningDisplay();
+                closeModal('conditioning');
+            }
+        }
+
+        // Function to save lifting data
+        function saveLiftingData(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const score = document.getElementById('liftingScore').value;
+            const date = document.getElementById('liftingDate').value;
+
+            if (score) {
+                const liftingData = {
+                    score: score,
+                    date: date
+                };
+
+                const liftingHistory = JSON.parse(localStorage.getItem('liftingHistory') || '[]');
+                
+                // Check for existing entry on the same date
+                const existingIndex = liftingHistory.findIndex(item => item.date === date);
+                if (existingIndex !== -1) {
+                    liftingHistory[existingIndex] = liftingData;
+                } else {
+                    liftingHistory.push(liftingData);
+                }
+
+                localStorage.setItem('liftingHistory', JSON.stringify(liftingHistory));
+                updateLiftingDisplay();
+                closeModal('lifting');
+            }
+        }
+
+        // Function to open modal
+        function openModal(sectionType) {
+            const modal = document.getElementById(`${sectionType}Modal`);
+            modal.style.display = 'block';
+            
+            // Load data for the section
+            if (sectionType === 'profile') {
+                loadProfileData();
+            } else if (sectionType === 'weight') {
+                loadWeightData();
+            } else if (sectionType === 'lifting') {
+                loadLiftingData();
+            } else if (sectionType === 'conditioning') {
+                loadConditioningData();
+            }
+            
+            // Load history
+            loadHistory(sectionType);
+        }
+
+        // Function to close modal
+        function closeModal(sectionType) {
+            const modal = document.getElementById(`${sectionType}Modal`);
+            modal.style.display = 'none';
+            
+            // Reset form values to current data
+            if (sectionType === 'profile') {
+                loadProfileData();
+            } else if (sectionType === 'weight') {
+                loadWeightData();
+            } else if (sectionType === 'lifting') {
+                loadLiftingData();
+            } else if (sectionType === 'conditioning') {
+                loadConditioningData();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to toggle history view
+        function toggleHistory(sectionType, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const historyView = document.getElementById(`${sectionType}History`);
+            const currentDisplay = historyView.style.display;
+            
+            // Hide all other history views first
+            document.querySelectorAll('.history-view').forEach(view => {
+                view.style.display = 'none';
+            });
+            
+            // Toggle the clicked history view
+            historyView.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        }
+
+        // Function to load history
+        function loadHistory(sectionType) {
+            const history = JSON.parse(localStorage.getItem(`${sectionType}History`) || '[]');
+            const historyView = document.getElementById(`${sectionType}History`);
+            historyView.innerHTML = '';
+
+            // Sort history by date
+            history.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = formatHistoryItem(sectionType, item);
+                historyItem.onclick = (event) => {
+                    event.stopPropagation();
+                    editHistoryItem(sectionType, item);
+                };
+                historyView.appendChild(historyItem);
+            });
+        }
+
+        // Function to format history item
+        function formatHistoryItem(sectionType, item) {
+            switch(sectionType) {
+                case 'profile':
+                    return `${item.name || 'No name'}${item.sport ? ` - ${item.sport}` : ''} - ${item.feet}'${item.inches}" - ${item.date}`;
+                case 'weight':
+                    return `${item.weight} lbs - ${item.date}`;
+                case 'lifting':
+                    return `${item.score} ASC - ${item.date}`;
+                case 'conditioning':
+                    const typeDisplay = item.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    return `${typeDisplay}: ${item.value} - ${item.date}`;
+            }
+        }
+
+        // Function to edit history item
+        function editHistoryItem(sectionType, item) {
+            switch(sectionType) {
+                case 'profile':
+                    document.getElementById('profileName').value = item.name || '';
+                    document.getElementById('profileSport').value = item.sport || '';
+                    document.getElementById('profileFeet').value = item.feet;
+                    document.getElementById('profileInches').value = item.inches;
+                    break;
+                case 'weight':
+                    document.getElementById('bodyWeight').value = item.weight;
+                    break;
+                case 'lifting':
+                    document.getElementById('liftingScore').value = item.score;
+                    break;
+                case 'conditioning':
+                    document.getElementById('conditioningType').value = item.type;
+                    document.getElementById('conditioningValue').value = item.value;
+                    break;
+            }
+            
+            // Remove the old entry
+            const history = JSON.parse(localStorage.getItem(`${sectionType}History`) || '[]');
+            const updatedHistory = history.filter(h => {
+                if (sectionType === 'conditioning') {
+                    // For conditioning, use timestamp for unique identification
+                    return h.timestamp !== item.timestamp;
+                } else {
+                    return JSON.stringify(h) !== JSON.stringify(item);
+                }
+            });
+            localStorage.setItem(`${sectionType}History`, JSON.stringify(updatedHistory));
+            loadHistory(sectionType);
+        }
+
+        // Function to update profile display
+        function updateProfileDisplay() {
+            const name = document.getElementById('profileName').value;
+            const sport = document.getElementById('profileSport').value;
+            const feet = document.getElementById('profileFeet').value;
+            const inches = document.getElementById('profileInches').value;
+            
+            if (name || sport || feet || inches) {
+                const displayText = `${name || 'No name'}${sport ? ` - ${sport}` : ''} - ${feet || 0}'${inches || 0}"`;
+                document.getElementById('profileCurrentValue').textContent = displayText;
+            } else {
+                document.getElementById('profileCurrentValue').textContent = 'Click to edit';
+            }
+        }
+
+        // Function to update weight display
+        function updateWeightDisplay() {
+            const weight = document.getElementById('bodyWeight').value;
+            
+            if (weight) {
+                document.getElementById('weightCurrentValue').textContent = `${weight} lbs`;
+            } else {
+                document.getElementById('weightCurrentValue').textContent = 'Click to edit';
+            }
+        }
+
+        // Function to clear conditioning form
+        function clearConditioningForm(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            document.getElementById('conditioningType').value = '';
+            document.getElementById('conditioningValue').value = '';
+        }
+
+        // Function to update conditioning display
+        function updateConditioningDisplay() {
+            const type = document.getElementById('conditioningType').value;
+            const value = document.getElementById('conditioningValue').value;
+            const currentDate = document.getElementById('conditioningDate').value;
+            
+            if (type && value) {
+                const typeDisplay = type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                const conditioningHistory = JSON.parse(localStorage.getItem('conditioningHistory') || '[]');
+                const currentDateData = conditioningHistory.filter(item => item.date === currentDate);
+                
+                if (currentDateData.length > 1) {
+                    // Show count of entries for this date
+                    document.getElementById('conditioningCurrentValue').textContent = `${typeDisplay}: ${value} (${currentDateData.length} entries today)`;
+                } else {
+                    document.getElementById('conditioningCurrentValue').textContent = `${typeDisplay}: ${value}`;
+                }
+            } else {
+                document.getElementById('conditioningCurrentValue').textContent = 'Click to edit';
+            }
+        }
+
+        // Function to update lifting display
+        function updateLiftingDisplay() {
+            const score = document.getElementById('liftingScore').value;
+            
+            if (score) {
+                document.getElementById('liftingCurrentValue').textContent = `${score} ASC`;
+            } else {
+                document.getElementById('liftingCurrentValue').textContent = 'Click to edit';
+            }
+        }
+
+        // Add this after the setupEventListeners loop
+        let currentExerciseIndex = 1;
+        const totalExercises = 16;
+
+        document.getElementById('nextExerciseBtn').addEventListener('click', () => {
+            // Auto-populate lifting score with current ASC score
+            const currentScore = document.getElementById('totalScore').textContent;
+            if (currentScore && currentScore !== '0.00') {
+                document.getElementById('liftingScore').value = currentScore;
+                updateLiftingDisplay();
+            }
+            
+            // Find the next empty exercise container
+            let nextEmptyIndex = currentExerciseIndex;
+            let foundEmpty = false;
+            
+            // Check if current container has any filled inputs
+            const currentContainer = document.getElementById(`exerciseContainer${currentExerciseIndex}`);
+            const hasFilledInputs = Array.from(currentContainer.querySelectorAll('input')).some(input => 
+                input.value && !input.readOnly
+            );
+            
+            if (!hasFilledInputs) {
+                // If current container is empty, show it
+                currentContainer.style.display = 'block';
+                return;
+            }
+            
+            // Look for the next empty container
+            for (let i = 1; i <= totalExercises; i++) {
+                const container = document.getElementById(`exerciseContainer${i}`);
+                const hasFilledInputs = Array.from(container.querySelectorAll('input')).some(input => 
+                    input.value && !input.readOnly
+                );
+                
+                if (!hasFilledInputs) {
+                    nextEmptyIndex = i;
+                    foundEmpty = true;
+                    break;
+                }
+            }
+            
+            // If no empty container found, go back to first empty
+            if (!foundEmpty) {
+                nextEmptyIndex = 1;
+            }
+            
+            // Show the next empty container
+            document.getElementById(`exerciseContainer${nextEmptyIndex}`).style.display = 'block';
+            currentExerciseIndex = nextEmptyIndex;
+            
+            // Update button text
+            if (nextEmptyIndex === totalExercises) {
+                document.getElementById('nextExerciseBtn').textContent = 'Previous Exercise';
+            } else {
+                document.getElementById('nextExerciseBtn').textContent = 'Next Exercise';
+            }
+        });
+        </script>
+    </body>
+</html>

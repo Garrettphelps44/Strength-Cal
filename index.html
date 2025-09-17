@@ -700,7 +700,7 @@
                                 <div class="calendar-grid" id="liftingCalendarGrid"></div>
                             </div>
                         </div>
-                        <input type="number" id="liftingScore" placeholder="AKPSC Score" step="0.01" readonly>
+                        <input type="number" id="liftingScore" placeholder="ASC Score" step="0.01" readonly>
                         <div class="warning-message" id="liftingWarning"></div>
                         <div class="button-group">
                             <button onclick="saveLiftingData(event)">Save</button>
@@ -769,8 +769,8 @@
                 <button id="nextExerciseBtn" style="margin-top: 20px;">Next Exercise</button>
             </div>
             <div class="button-row" style="margin-top: 20px;">
-                <button id="doneButton">Save</button>
-                <button id="cancelButton">Cancel</button>
+                <button id="doneButton">Done</button>
+                <button id="cancelButton">Reset</button>
             </div>
         </div>
     
@@ -876,7 +876,7 @@ function createCalculationBox(index) {
                 <input type="number" class="set-input" placeholder="Reps">
                 <input type="number" class="set-input" placeholder="Tempo">
                 <input type="number" class="set-input set-value" placeholder="Value" readonly>
-                <button class="calculate-set">Calculate</button>
+                            <button class="calculate-set">Next Set</button>
             </div>
         </div>
         <div id="results${index}" class="results"></div>
@@ -1020,7 +1020,7 @@ async function calculateStrength(index, setRow) {
             <input type="number" class="set-input" value="${reps}" placeholder="Reps">
             <input type="number" class="set-input" value="${tempo}" placeholder="Tempo">
             <input type="number" class="set-input set-value" placeholder="Value" readonly>
-            <button class="calculate-set">Calculate</button>
+                            <button class="calculate-set">Next Set</button>
         `;
         setsContainer.appendChild(newSetRow);
 
@@ -1043,7 +1043,7 @@ function setupSetRowListeners(setRow, index) {
 
     calculateButton.addEventListener('click', async function() {
         await calculateStrength(index, setRow);
-        calculateButton.textContent = 'Calculate';
+        calculateButton.textContent = 'Next Set';
     });
 }
 
@@ -1197,7 +1197,7 @@ for (let i = 1; i <= 16; i++) {
         });
 
 // Replace done button with save functionality
-document.getElementById('doneButton').textContent = 'Save';
+document.getElementById('doneButton').textContent = 'Done';
 document.getElementById('doneButton').addEventListener('click', () => {
     const score = document.getElementById('totalScore').textContent;
     const date = document.getElementById('workoutDate').value;
